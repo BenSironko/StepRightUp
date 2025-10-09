@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -50,7 +51,10 @@ public static class Save
         // public bool MechanicTutorialCompleted;
         // public List<LevelData> LevelData;
         // public List<ChapterData> ChapterData;
-        public bool DailyChallengeWindowOpen = false;
+        public bool InWindow = false;
+        public bool AttemptedDailyChallenge = false;
+        public string LastWindowOpen = "";
+        
         public SaveData()
         {
             // LevelData = new List<LevelData>();
@@ -66,6 +70,8 @@ public static class Save
     // private static Dictionary<LevelType, ChapterData> ChapterDataDictionary;
 
     private static bool Initialized;
+    
+    public static bool InWindow => SaveDataInstance != null ? SaveDataInstance.InWindow : false;
 
     // public static bool IsMechanicsTutorialCompleted => SaveDataInstance != null ? SaveDataInstance.MechanicTutorialCompleted : false;
 
@@ -80,7 +86,9 @@ public static class Save
             }
 
             if (SaveDataInstance == null)
+            {
                 SaveDataInstance = new SaveData();
+            }
         }
         else
         {
@@ -224,7 +232,20 @@ public static class Save
     //     return LevelDataDictionary[chapter][levelIndex];
     // }
 
-    public static void SaveAsFile()
+    public static void SaveWindowEntry()
+    {
+        SaveDataInstance.InWindow = true;
+        SaveDataInstance.LastWindowOpen = DateTime.UtcNow.ToString();
+        SaveAsFile();
+    }
+
+    public static void SaveWindowExit()
+    {
+        SaveDataInstance.InWindow = false;
+        SaveAsFile();
+    }
+
+    static void SaveAsFile()
     {
         string json = JsonUtility.ToJson(SaveDataInstance);
         System.IO.File.WriteAllText(SaveFilePath, json);
