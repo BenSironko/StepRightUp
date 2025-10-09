@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 394879478}
   - component: {fileID: 394879477}
   - component: {fileID: 394879476}
+  - component: {fileID: 394879480}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -186,9 +187,41 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 912244284}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &394879480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394879475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f3639506a38f34f93bf3440306273d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ComPort: COM5
+  BaudRate: 115200
+  Parity: 0
+  StopBits: 1
+  DataBits: 8
+  DtrEnable: 0
+  RtsEnable: 0
+  ReadTimeout: 10
+  WriteTimeout: 10
+  ComStatusText: {fileID: 0}
+  RawDataText: {fileID: 0}
+  StatusMsgBox: {fileID: 0}
+  LoopMethod: 1
+  OpenPortOnStart: 0
+  ShowDebugs: 1
+  ComPorts: []
+  ReadDataMethod: 0
+  Delimiter: 
+  Separator: 0
 --- !u!1 &599946433
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,8 +258,8 @@ Camera:
   m_GameObject: {fileID: 599946433}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -398,12 +431,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 912244281}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 394879479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -411,4 +444,3 @@ SceneRoots:
   m_Roots:
   - {fileID: 599946436}
   - {fileID: 394879479}
-  - {fileID: 912244284}

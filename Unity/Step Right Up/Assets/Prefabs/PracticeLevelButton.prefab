@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6392086303874985435}
   - component: {fileID: 4756616148820018624}
   m_Layer: 5
-  m_Name: PracticeLevelButton1
+  m_Name: PracticeLevelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

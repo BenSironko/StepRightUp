@@ -11,7 +11,11 @@ public class GameManager : MonoBehaviour
         {
             if (m_Instance == null)
             {
-                m_Instance = new GameObject("GameManager").AddComponent<GameManager>();
+                m_Instance = FindFirstObjectByType<GameManager>();
+                if (m_Instance == null)
+                {
+                    m_Instance = new GameObject("GameManager").AddComponent<GameManager>();
+                }
             }
 
             return m_Instance;
@@ -22,7 +26,7 @@ public class GameManager : MonoBehaviour
     
     //Implicit Properties
     private SceneController m_SceneController;
-    public SceneController SceneController => m_SceneController ??= GetComponent<SceneController>();
+    public SceneController SceneController => m_SceneController ? m_SceneController : m_SceneController = GetComponent<SceneController>();
     
     void Awake()
     {

@@ -50,6 +50,7 @@ public static class Save
         // public bool MechanicTutorialCompleted;
         // public List<LevelData> LevelData;
         // public List<ChapterData> ChapterData;
+        public bool DailyChallengeWindowOpen = false;
         public SaveData()
         {
             // LevelData = new List<LevelData>();
