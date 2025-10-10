@@ -10,10 +10,7 @@ public class ConfigData
     public int WindowEndHour = 4;
     public int WindowEndMinute = 0;
     public int WindowEndSecond = 0;
-    // public float InsetHeightPercentage = 2f;
-    // public float ResetMovementThreshold = 0.01f;
-    // public ColorData InsetColor = new ColorData();
-    // public OneEuroFilterData FilterData = new OneEuroFilterData();
+    public int ChallengeLengthInDays = 360;
 }
 
 public static class Config

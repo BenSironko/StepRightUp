@@ -4,23 +4,6 @@ using UnityEngine.Events;
 
 public class TimeManager : MonoBehaviour
 {
-    private const float GameSecondsPerRealSeconds = 60f*60f;
-    
-    private static TimeManager m_Instance;
-    public static TimeManager Instance
-    {
-        get
-        {
-            if (m_Instance == null)
-            {
-                m_Instance = FindFirstObjectByType<TimeManager>();
-            }
-            return m_Instance;
-        }
-        
-        private set => m_Instance = value;
-    }
-    
     [SerializeField]
     private UnityEvent m_OnWindowEntered;
     public UnityEvent OnWindowEntered
@@ -48,33 +31,16 @@ public class TimeManager : MonoBehaviour
             return m_OnWindowExited;
         }
     }
-    
-    public bool Paused {get; set;}
-
-    //public Day CurrentDay { get; private set; } = Day.Monday;
-    private TimeSpan CurrentTime;
-    public float CurrentSeconds => CurrentTime.Seconds;
-    public float CurrentMinutes => CurrentTime.Minutes;
-    public float CurrentHour => CurrentTime.Hours;
-    public string TimeString => DateTime.Today.Add(CurrentTime).ToString(@"h\:mm tt");
 
     private TimeSpan WindowStart;
     private TimeSpan WindowEnd;
-    private bool InWindow;
+    public bool InWindow => Save.InWindow;
 
     private void OnEnable()
     {
-        Instance = this;
-        CurrentTime = new TimeSpan(0, 0, 0);
         DontDestroyOnLoad(gameObject);
-        InWindow = Save.InWindow;
         WindowStart = new TimeSpan(Config.Data.WindowStartHour, Config.Data.WindowStartMinute, Config.Data.WindowStartSecond);
         WindowEnd = new TimeSpan(Config.Data.WindowEndHour, Config.Data.WindowEndMinute, Config.Data.WindowEndSecond);
-    }
-
-    void OnDisable()
-    {
-        Instance = null;
     }
 
     void Update()
@@ -111,7 +77,11 @@ public class TimeManager : MonoBehaviour
     {
         if (!InWindow)
         {
-            InWindow = true;
+            if (GameManager.Instance.AttemptedDailyChallenge)
+            {
+                GameManager.Instance.AttemptedDailyChallenge = false;
+            }
+            
             Save.SaveWindowEntry();
             if (OnWindowEntered != null)
             {
@@ -124,7 +94,6 @@ public class TimeManager : MonoBehaviour
     {
         if (InWindow)
         {
-            InWindow = false;
             Save.SaveWindowExit();
             if (OnWindowExited != null)
             {
