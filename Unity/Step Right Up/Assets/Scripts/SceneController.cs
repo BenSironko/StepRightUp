@@ -7,4 +7,10 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
     }
+
+    public void LoadMiniGame(MiniGameType miniGameType)
+    {
+        GameManager.Instance.CurrentMiniGameType = miniGameType;
+        LoadScene("Gameplay");
+    }
 }

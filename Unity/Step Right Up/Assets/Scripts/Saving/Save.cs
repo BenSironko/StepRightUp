@@ -94,6 +94,12 @@ public static class Save
         return SaveDataInstance.MiniGameSaveData;
     }
 
+    public static void SaveMiniGameSaveData(MiniGameSaveData miniGameSaveData)
+    {
+        SaveDataInstance.MiniGameSaveData = miniGameSaveData;
+        SaveAsFile();
+    }
+
     static void SaveAsFile()
     {
         string json = JsonUtility.ToJson(SaveDataInstance);

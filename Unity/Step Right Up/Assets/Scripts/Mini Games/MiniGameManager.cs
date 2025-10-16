@@ -9,9 +9,23 @@ public class MiniGameManager : MonoBehaviour
     private List<MiniGameConfig> m_MiniGameConfigs;
     private List<MiniGameConfig> MiniGameConfigs => m_MiniGameConfigs;
     
+    private Dictionary<MiniGameType, MiniGameConfig> m_MiniGameConfigsByType;
+
+    private Dictionary<MiniGameType, MiniGameConfig> MiniGameConfigsByType
+    {
+        get
+        {
+            if (m_MiniGameConfigsByType == null)
+            {
+                m_MiniGameConfigsByType = MiniGameConfigs.ToDictionary(mg => mg.Type, mg => mg);
+            }
+            return m_MiniGameConfigsByType;
+        }
+    }
+    
     private List<MiniGameType> MiniGameBag;
     private List<MiniGameType> UnlockedMiniGames;
-    private List<MiniGameType> PracticeMiniGames;
+    public List<MiniGameType> PracticeMiniGames { get; private set; }
     private MiniGameType NextMiniGame;
     private MiniGameType LastMiniGame;
 
@@ -23,6 +37,11 @@ public class MiniGameManager : MonoBehaviour
     void OnDestroy()
     {
         SaveMiniGameInfo();
+    }
+
+    public bool TryGetMiniGameConfig(MiniGameType type, out MiniGameConfig config)
+    {
+        return MiniGameConfigsByType.TryGetValue(type, out config);
     }
 
     void LoadMiniGameInfo()
@@ -43,6 +62,7 @@ public class MiniGameManager : MonoBehaviour
         miniGameSaveData.PracticeMiniGames = PracticeMiniGames.Select(mg => (int)mg).ToArray();
         miniGameSaveData.NextMiniGame = (int)NextMiniGame;
         miniGameSaveData.LastMiniGame = (int)LastMiniGame;
+        Save.SaveMiniGameSaveData(miniGameSaveData);
     }
 
     public void UpdateMiniGames()
@@ -53,12 +73,12 @@ public class MiniGameManager : MonoBehaviour
         {
             NextMiniGame = GetMiniGameFromBag();
             PracticeMiniGames.Add(NextMiniGame);
-            LastMiniGame = NextMiniGame;
             for (int i = 1; i < 3; i++)
             {
                 TryReloadMiniGameBag();
                 PracticeMiniGames.Add(GetMiniGameFromBag());
             }
+            LastMiniGame = NextMiniGame;
             PracticeMiniGames.Shuffle();
         }
         SaveMiniGameInfo();
@@ -68,10 +88,21 @@ public class MiniGameManager : MonoBehaviour
     {
         if (MiniGameBag == null || MiniGameBag.Count == 0)
         {
-            MiniGameBag = new List<MiniGameType>(UnlockedMiniGames.Where(mg => mg != LastMiniGame));
-            if (MiniGameBag.Count == 0 && LastMiniGame != MiniGameType.None)
+            if (UnlockedMiniGames.Count < 3)
             {
-                MiniGameBag.Add(LastMiniGame);
+                MiniGameBag = new List<MiniGameType>();
+                for (int i = 0; i < 3; i++)
+                {
+                    MiniGameBag.Add(UnlockedMiniGames[UnityEngine.Random.Range(0, UnlockedMiniGames.Count)]);
+                }
+            }
+            else
+            {
+                MiniGameBag = new List<MiniGameType>(UnlockedMiniGames.Where(mg => mg != LastMiniGame && !PracticeMiniGames.Contains(mg)));
+                if (MiniGameBag.Count == 0)
+                {
+                    MiniGameBag.Add(LastMiniGame);
+                }
             }
         }
     }

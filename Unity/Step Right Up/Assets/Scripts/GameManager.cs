@@ -27,14 +27,14 @@ public class GameManager : MonoBehaviour
     private TimeManager TimeManager => m_TimeManager ? m_TimeManager : m_TimeManager = GetComponent<TimeManager>();
     
     private MiniGameManager m_MiniGameManager;
-    private MiniGameManager MiniGameManager => m_MiniGameManager ? m_MiniGameManager : m_MiniGameManager = GetComponent<MiniGameManager>();
+    public MiniGameManager MiniGameManager => m_MiniGameManager ? m_MiniGameManager : m_MiniGameManager = GetComponent<MiniGameManager>();
     
     //State
     public bool InWindow => TimeManager.InWindow;
     public bool InGame { get; set; }
     public bool Practice { get; set; }
+    public MiniGameType CurrentMiniGameType { get; set; }
     public bool AttemptedDailyChallenge { get => Save.AttemptedDailyChallenge; set => Save.AttemptedDailyChallenge = value; }
-    
     public bool TimeForRealAttempt => TimeManager.InWindow && !AttemptedDailyChallenge;
     
     void Awake()
