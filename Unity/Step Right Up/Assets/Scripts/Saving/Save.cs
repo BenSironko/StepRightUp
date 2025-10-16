@@ -4,28 +4,13 @@ using UnityEngine;
 
 public static class Save
 {
-    [System.Serializable]
-    private class SaveData
-    {
-        public bool InWindow = false;
-        public bool AttemptedDailyChallenge = false;
-        public string LastWindowOpen = "";
-        public int CurrentChallengeLengthInDays;
-        public int DaysSucceeded = 0;
-        
-        public SaveData()
-        {
-            CurrentChallengeLengthInDays = Config.Data.ChallengeLengthInDays;
-        }
-    }
-    
     private static SaveData SaveDataInstance;
 
     private static string SaveFilePath => Application.persistentDataPath + Path.DirectorySeparatorChar + "Save.json";
     
     private static bool Initialized;
     
-    public static bool InWindow => SaveDataInstance != null ? SaveDataInstance.InWindow : false;
+    public static bool InWindow => SaveDataInstance != null && SaveDataInstance.TimeSaveData != null ? SaveDataInstance.TimeSaveData.InWindow : false;
     public static bool AttemptedDailyChallenge
     {
         get => SaveDataInstance != null ? SaveDataInstance.AttemptedDailyChallenge : false; 
@@ -59,31 +44,60 @@ public static class Save
         }
     }
 
-    private static void InitializeSaveData()
+    public static void InitializeSaveData()
     {
         if (!Initialized)
         {
             Initialized = true;
+            SaveAsFile();
         }
     }
 
     public static void SaveWindowEntry()
     {
-        SaveDataInstance.InWindow = true;
-        SaveDataInstance.LastWindowOpen = DateTime.UtcNow.ToString();
+        SaveDataInstance.TimeSaveData.InWindow = true;
         SaveAsFile();
     }
 
     public static void SaveWindowExit()
     {
-        SaveDataInstance.InWindow = false;
+        SaveDataInstance.TimeSaveData.InWindow = false;
         SaveAsFile();
+    }
+
+    public static void IncrementDaysLeft(int amount)
+    {
+        SaveDataInstance.TimeSaveData.CurrentDaysLeft += amount;
+        SaveAsFile();
+    }
+
+    public static void IncrementDaysSucceeded(int amount)
+    {
+        SaveDataInstance.TimeSaveData.DaysSucceeded += amount;
+        SaveAsFile();
+    }
+
+    public static void IncrementDaysFailed(int amount)
+    {
+        SaveDataInstance.TimeSaveData.DaysFailed += amount;
+        SaveAsFile();
+    }
+
+    public static void IncrementDaysElapsed(int amount)
+    {
+        SaveDataInstance.TimeSaveData.DaysElapsed += amount;
+        SaveAsFile();
+    }
+
+    public static MiniGameSaveData GetMiniGameSaveData()
+    {
+        return SaveDataInstance.MiniGameSaveData;
     }
 
     static void SaveAsFile()
     {
         string json = JsonUtility.ToJson(SaveDataInstance);
-        System.IO.File.WriteAllText(SaveFilePath, json);
+        File.WriteAllText(SaveFilePath, json);
     }
 
     public static void DeleteSaveFile()

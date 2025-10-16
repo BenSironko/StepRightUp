@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 394879478}
   - component: {fileID: 394879477}
   - component: {fileID: 394879476}
+  - component: {fileID: 394879481}
   - component: {fileID: 394879480}
   m_Layer: 0
   m_Name: GameManager
@@ -151,6 +152,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a05e8b8c814bc489c2cbb1dec3e126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_OnWindowEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnWindowExited:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &394879477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +229,22 @@ MonoBehaviour:
   ReadDataMethod: 0
   Delimiter: 
   Separator: 0
+--- !u!114 &394879481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394879475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667cac6d465bb294cae08bc8c42a13ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MiniGameConfigs:
+  - {fileID: 11400000, guid: 26d73163388f4584fbabe7d808686434, type: 2}
+  - {fileID: 11400000, guid: 26d73163388f4584fbabe7d808686434, type: 2}
+  - {fileID: 11400000, guid: 26d73163388f4584fbabe7d808686434, type: 2}
 --- !u!1 &599946433
 GameObject:
   m_ObjectHideFlags: 0
