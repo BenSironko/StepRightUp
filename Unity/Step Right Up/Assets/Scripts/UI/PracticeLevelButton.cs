@@ -24,8 +24,8 @@ public class PracticeLevelButton : MonoBehaviour
     {
         if (MiniGameType != MiniGameType.None)
         {
-            GameManager.Instance.Practice = true;
-            GameManager.Instance.SceneController.LoadMiniGame(MiniGameType);
+            //GameManager.Instance.Practice = true;
+            SceneController.LoadMiniGame(MiniGameType);
         }
     }
 }

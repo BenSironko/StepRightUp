@@ -18,6 +18,22 @@ public class MiniGameConfig : ScriptableObject
     public MiniGame Prefab => m_Prefab;
     
     [SerializeField]
+    private bool m_HasStrikes;
+    public bool HasStrikes => m_HasStrikes;
+    
+    [SerializeField]
+    private int m_BaseStrikes = 3;
+    public int  BaseStrikes => m_BaseStrikes;
+    
+    [SerializeField]
+    private bool m_HasTimer;
+    public bool HasTimer => m_HasTimer;
+    
+    [SerializeField]
+    private float m_BaseTimeInSeconds;
+    public float BaseTimeInSeconds => m_BaseTimeInSeconds;
+    
+    [SerializeField]
     private List<ModifierType> m_PossibleModifiers;
     public List<ModifierType> PossibleModifiers => m_PossibleModifiers;
 }

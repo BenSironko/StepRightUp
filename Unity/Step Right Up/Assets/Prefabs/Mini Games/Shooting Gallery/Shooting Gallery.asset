@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: Shooting Gallery
   m_EditorClassIdentifier: 
   m_Type: 1
+  m_MiniGameName: Shooting Gallery
+  m_Prefab: {fileID: 0}
+  m_HasStrikes: 1
+  m_BaseStrikes: 3
+  m_HasTimer: 1
+  m_BaseTimeInSeconds: 60
   m_PossibleModifiers: 
